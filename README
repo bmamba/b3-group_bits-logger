@@ -1,0 +1,23 @@
+This tool augments the B3 bot with the possibility to log changes of the rights
+of players (i.e. changes of the field group_bits in the table clients) if you
+are using MySQL v5.0.2 or above.
+
+There are two sql files. The first sql file table_create.sql creates a table
+group_bits_log where you can see the changes of group_bits in the table
+clients. The second file trigger_create.sql creates the triggers, which fill
+the table group_bits_log.
+
+Your mysql use must have the right to create new tables and triggers.
+
+Let MYSQLUSER be your mysql user (for example root) and B3DB the database name
+of the b3 database.
+
+mysql -u MYSQLUSER -p B3DB < table_create.sql
+mysql -u MYSQLUSER -p B3DB < trigger_create.sql
+
+That's all.
+
+If you want to know the group_bits changes of id 42 let's say, just go into
+mysql client and type
+select * from group_bits_log where client_id = 42 order by time;
+
